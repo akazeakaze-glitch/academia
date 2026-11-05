@@ -1,0 +1,18 @@
+--
+-- Restrições para tabelas `fichas_exercicios`
+--
+ALTER TABLE `fichas_exercicios`
+  ADD CONSTRAINT `fichas_exercicios_ibfk_1` FOREIGN KEY (`ficha_id`) REFERENCES `fichas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fichas_exercicios_ibfk_2` FOREIGN KEY (`exercicio_id`) REFERENCES `exercicios` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `ficha_exercicios`
+--
+ALTER TABLE `ficha_exercicios`
+  ADD CONSTRAINT `ficha_exercicios_ibfk_1` FOREIGN KEY (`ficha_id`) REFERENCES `fichas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ficha_exercicios_ibfk_2` FOREIGN KEY (`exercicio_id`) REFERENCES `exercicios` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
