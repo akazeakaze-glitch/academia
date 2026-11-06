@@ -1,4 +1,11 @@
 <?php
+$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$file = __DIR__ . $request;
+
+if ($request !== '/' && $request !== '/index.php' && file_exists($file) && is_file($file)) {
+    require_once $file;
+    exit;
+}
 session_start();
 require 'conexao.php'; 
 
