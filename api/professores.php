@@ -46,6 +46,7 @@ $professores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <li class="nav-item"><a href="exercicios.php" class="nav-link">Exercícios</a></li>
                 <li class="nav-item"><a href="fichas.php" class="nav-link">Fichas de Treino</a></li>
                 <li class="nav-item"><a href="avaliacoes.php" class="nav-link">Avaliações Físicas</a></li>
+                <li class="nav-item"><a href="ver_feedbacks.php" class="nav-link">Feedbacks</a></li>
             </ul>
             <hr style="border-color: #444;">
             <a href="index.php" class="nav-link text-danger text-center">Sair do Sistema</a>
