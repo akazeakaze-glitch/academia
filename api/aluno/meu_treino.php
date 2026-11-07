@@ -335,17 +335,16 @@ $exercicios_hoje = array_filter($exercicios, function($ex) use ($treino_atual) {
         </div>
     </div>
 
-</div
-    <div class="bottom-nav">
-        <a href="painel_aluno.php" class="nav-item">
-            <i class="bi bi-house-door"></i>
-            Início
-        </a>
-        <a href="perfil.php" class="nav-item">
-            <i class="bi bi-person"></i>
-            Perfil
-        </a>
-    </div>
+<div style="position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: #1a1a1a; border-top: 1px solid #333; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; z-index: 1000;">
+    <a href="painel_aluno.php" style="color: #ffffff; text-decoration: none; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; font-weight: 500;">
+        <i class="bi bi-house-door" style="font-size: 1.4rem; margin-bottom: 3px; color: #f97316;"></i>
+        <span>Início</span>
+    </a>
+    <a href="perfil.php" style="color: #ffffff; text-decoration: none; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; font-weight: 500;">
+        <i class="bi bi-person" style="font-size: 1.4rem; margin-bottom: 3px; color: #f97316;"></i>
+        <span>Perfil</span>
+    </a>
+</div>
 
 </body>
 </html>
