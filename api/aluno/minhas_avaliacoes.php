@@ -7,22 +7,27 @@ if (!isset($_SESSION['aluno_id'])) {
     exit;
 }
 
-$aluno_id =$_SESSION['aluno_id'];
-$stmt_chart =$pdo->prepare("SELECT data_avaliacao, peso, cintura, abdomen FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao ASC");
-$stmt_chart->execute(['aluno_id' =>$aluno_id]);
-$avaliacoes_chart =$stmt_chart->fetchAll(PDO::FETCH_ASSOC);
+$aluno_id = $_SESSION['aluno_id'];
 
-// Preparar vetores para o Chart.js
-$datas_label = [];$pesos_data = [];
-$cinturas_data = [];$abdomens_data = [];
+$stmt_chart = $pdo->prepare("SELECT data_avaliacao, peso, cintura, abdomen FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao ASC");
+$stmt_chart->execute(['aluno_id' => $aluno_id]);
+$avaliacoes_chart = $stmt_chart->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($avaliacoes_chart as $av) {$datas_label[] = date('d/m/Y', strtotime($av['data_avaliacao']));$pesos_data[] = (float)$av['peso'];$cinturas_data[] = !empty($av['cintura']) ? (float)$av['cintura'] : null;
+$datas_label = [];
+$pesos_data = [];
+$cinturas_data = [];
+$abdomens_data = [];
+
+foreach ($avaliacoes_chart as $av) {
+    $datas_label[] = date('d/m/Y', strtotime($av['data_avaliacao']));
+    $pesos_data[] = (float)$av['peso'];
+    $cinturas_data[] = !empty($av['cintura']) ? (float)$av['cintura'] : null;
     $abdomens_data[] = !empty($av['abdomen']) ? (float)$av['abdomen'] : null;
 }
 
-$stmt =$pdo->prepare("SELECT * FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao DESC");
-$stmt->execute(['aluno_id' =>$aluno_id]);
-$avaliacoes =$stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $pdo->prepare("SELECT * FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao DESC");
+$stmt->execute(['aluno_id' => $aluno_id]);
+$avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -73,15 +78,14 @@ $avaliacoes =$stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <h5 class="mb-3" style="color: #aaa; font-size: 1rem; text-transform: uppercase;">Histórico Detalhado</h5>
 
-            <?php foreach ($avaliacoes as$av): ?>
+            <?php foreach ($avaliacoes as $av): ?>
                 <?php 
                     $imc = null;
-                    if (!empty($av['altura']) &&$av['altura'] > 0) {
-                        $imc = number_format($av['peso'] / ($av['altura'] *$av['altura']), 1);
+                    if (!empty($av['altura']) && $av['altura'] > 0) {
+                        $imc = number_format($av['peso'] / ($av['altura'] * $av['altura']), 1);
                     }
                 ?>
                 <div class="card card-dark mb-4">
-                    <!-- CABEÇALHO DO CARD (ÍCONE DE CALENDÁRIO REMOVIDO) -->
                     <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #252525; border-bottom: 1px solid #333; color: #fff; border-radius: 12px 12px 0 0;">
                         <span><strong><?= date('d/m/Y', strtotime($av['data_avaliacao'])) ?></strong></span>
                         <span class="badge badge-orange"><?= $av['peso'] ?> kg</span>
@@ -98,7 +102,7 @@ $avaliacoes =$stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="col-4">
                                 <div class="metric-box">
                                     <div class="metric-label">Altura</div>
-                                    <div class="metric-value"><?= !empty($av['altura']) ?$av['altura'] . ' m' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['altura']) ? $av['altura'] . ' m' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -117,49 +121,49 @@ $avaliacoes =$stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Cintura</div>
-                                    <div class="metric-value"><?= !empty($av['cintura']) ?$av['cintura'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['cintura']) ? $av['cintura'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Abdômen</div>
-                                    <div class="metric-value"><?= !empty($av['abdomen']) ?$av['abdomen'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['abdomen']) ? $av['abdomen'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Quadril</div>
-                                    <div class="metric-value"><?= !empty($av['quadril']) ?$av['quadril'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['quadril']) ? $av['quadril'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Tórax</div>
-                                    <div class="metric-value"><?= !empty($av['torax']) ?$av['torax'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['torax']) ? $av['torax'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Braço Dir.</div>
-                                    <div class="metric-value"><?= !empty($av['braco_direito']) ?$av['braco_direito'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['braco_direito']) ? $av['braco_direito'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Braço Esq.</div>
-                                    <div class="metric-value"><?= !empty($av['braco_esquerdo']) ?$av['braco_esquerdo'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['braco_esquerdo']) ? $av['braco_esquerdo'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Coxa Dir.</div>
-                                    <div class="metric-value"><?= !empty($av['coxa_direita']) ?$av['coxa_direita'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['coxa_direita']) ? $av['coxa_direita'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                             <div class="col-6 col-md-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Coxa Esq.</div>
-                                    <div class="metric-value"><?= !empty($av['coxa_esquerda']) ?$av['coxa_esquerda'] . ' cm' : '-' ?></div>
+                                    <div class="metric-value"><?= !empty($av['coxa_esquerda']) ? $av['coxa_esquerda'] . ' cm' : '-' ?></div>
                                 </div>
                             </div>
                         </div>
@@ -197,4 +201,61 @@ $avaliacoes =$stmt->fetchAll(PDO::FETCH_ASSOC);
                 datasets: [
                     {
                         label: 'Peso (kg)',
-                        data: <?= json_encode($pesos_data) ?>, borderColor: '#f97316', backgroundColor: 'rgba(249, 115, 22, 0.15)', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#f97316' }, { label: 'Cintura (cm)', data: <?= json_encode($
+                        data: <?= json_encode($pesos_data) ?>,
+                        borderColor: '#f97316',
+                        backgroundColor: 'rgba(249, 115, 22, 0.15)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#f97316'
+                    },
+                    {
+                        label: 'Cintura (cm)',
+                        data: <?= json_encode($cinturas_data) ?>,
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.15)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#06b6d4'
+                    },
+                    {
+                        label: 'Abdômen (cm)',
+                        data: <?= json_encode($abdomens_data) ?>,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#10b981'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#ffffff' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#aaa' },
+                        grid: { color: '#333' }
+                    },
+                    y: {
+                        ticks: { color: '#aaa' },
+                        grid: { color: '#333' }
+                    }
+                }
+            }
+        });
+    </script>
+    <?php endif; ?>
+
+</body>
+</html>
