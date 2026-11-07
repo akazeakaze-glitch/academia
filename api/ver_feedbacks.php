@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/conexao.php';
 
-// Consulta os feedbacks ordenados do mais recente para o mais antigo, trazendo o nome do aluno
+// Consulta os feedbacks ordenados do mais recente para o mais antigo
 $sql = "SELECT f.id, f.comentario, f.data_envio, a.nome AS aluno_nome, a.treino_atual
         FROM feedback_treino f
         JOIN alunos a ON f.aluno_id = a.id
@@ -27,9 +27,9 @@ $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body class="py-4">
     <div class="container">
         
-        <!-- CABEÇALHO DA PÁGINA -->
+        <!-- CABEÇALHO DA PÁGINA (SEM O ÍCONE) -->
         <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
-            <h3 class="mb-0"><i class="bi bi-chat-left-text text-warning"></i> Feedbacks dos Alunos</h3>
+            <h3 class="mb-0">Feedbacks dos Alunos</h3>
             <a href="painel.php" class="btn text-white" style="background-color: #252525; border: 1px solid #444; border-radius: 8px;">
                 <i class="bi bi-arrow-left"></i> Voltar ao Painel
             </a>
@@ -58,8 +58,9 @@ $feedbacks = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <?= nl2br(htmlspecialchars($fb['comentario'])) ?>
                                 </p>
                             </div>
+                            <!-- EXIBE APENAS A DATA (DD/MM/AAAA) -->
                             <div class="card-footer text-end" style="background-color: #1a1a1a; border-top: 1px solid #2a2a2a; font-size: 0.8rem; color: #888;">
-                                <i class="bi bi-clock me-1"></i> <?= date('d/m/Y H:i', strtotime($fb['data_envio'])) ?>
+                                <i class="bi bi-clock me-1"></i> <?= date('d/m/Y', strtotime($fb['data_envio'])) ?>
                             </div>
                         </div>
                     </div>
