@@ -37,7 +37,6 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     
-    <!-- CHART.JS VIA CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -53,7 +52,6 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="container">
         
-        <!-- CABEÇALHO -->
         <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
             <h4 class="mb-0">Histórico & Evolução</h4>
             <a href="painel_aluno.php" class="btn text-white btn-sm" style="background-color: #252525; border: 1px solid #444; border-radius: 8px;">
@@ -76,7 +74,6 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
 
-            <!-- HISTÓRICO DE AVALIAÇÕES EM CARDS -->
             <h5 class="mb-3" style="color: #aaa; font-size: 1rem; text-transform: uppercase;">Histórico Detalhado</h5>
 
             <?php foreach ($avaliacoes as $av): ?>
@@ -114,7 +111,6 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
 
-                        <!-- MEDIDAS CORPORAIS / PERIMETRIA -->
                         <h6 class="mt-3 mb-2" style="color: #aaa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
                             Circunferências (cm)
                         </h6>
