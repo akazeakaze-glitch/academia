@@ -320,17 +320,17 @@ $exercicios_hoje = array_filter($exercicios, function($ex) use ($treino_atual) {
         <?php endif; ?>
 
     </div>
-<div class="card mt-4 mb-4 border-primary">
-        <div class="card-header bg-primary text-white">
-            <h5 class="card-title mb-0"><i class="bi bi-chat-left-text"></i> Enviar Feedback ao Professor</h5>
+<div class="card mt-4 mb-4" style="background-color: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 12px;">
+        <div class="card-header" style="background-color: #252525; border-bottom: 1px solid #333; color: #fff; border-radius: 12px 12px 0 0;">
+            <h5 class="card-title mb-0" style="font-size: 1.1rem;"><i class="bi bi-chat-left-text"></i> Enviar Feedback ao Professor</h5>
         </div>
         <div class="card-body">
             <form method="POST" action="">
                 <div class="mb-3">
-                    <label for="comentario" class="form-label font-weight-bold">O que achou do treino de hoje?</label>
-                    <textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Ex: Achei o treino muito pesado nas pernas, gostaria de adicionar mais exercícios..." required></textarea>
+                    <label for="comentario" class="form-label" style="color: #ccc; font-weight: 500;">O que achou do treino de hoje?</label>
+                    <textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Ex: Achei o treino muito pesado nas pernas, gostaria de adicionar mais exercícios..." required style="background-color: #121212; color: #fff; border: 1px solid #444; border-radius: 8px;"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                <button type="submit" class="btn w-100" style="background-color: #f97316; color: #fff; font-weight: bold; border-radius: 8px; padding: 10px;">Enviar Mensagem</button>
             </form>
         </div>
     </div>
