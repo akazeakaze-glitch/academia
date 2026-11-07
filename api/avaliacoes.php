@@ -26,12 +26,10 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .nav-link { color: #aaaaaa; padding: 10px 15px; margin-bottom: 5px; border-radius: 8px; transition: 0.3s; }
         .nav-link:hover, .nav-link.active { background-color: #f97316; color: #ffffff; font-weight: bold; }
         
-        /* Tabela padronizada no Dark Mode */
         .table-custom { background-color: #1e1e1e; border-radius: 10px; overflow: hidden; }
         .table-custom th { color: #f97316; font-weight: 600; text-transform: uppercase; font-size: 0.9em; padding: 15px; background-color: #2a2a2a; border-bottom: none; }
         .table-custom td { color: #ffffff; padding: 15px; border-bottom: 1px solid #333; font-size: 0.95em; background-color: #1e1e1e; }
         
-        /* CORREÇÃO DAS CORES ESCURAS! Criei classes de texto mais claras para dar contraste no fundo escuro */
         .texto-claro { color: #cccccc !important; }
         .texto-destaque { color: #ffffff !important; font-weight: 500; }
     </style>
@@ -39,7 +37,6 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
     <div class="d-flex">
-        <!-- Menu Lateral -->
         <div class="sidebar p-3 d-flex flex-column">
             <h4 class="text-center mt-3 mb-4" style="color: #f97316;">Corpo e Forma</h4>
             <hr style="border-color: #444;">
