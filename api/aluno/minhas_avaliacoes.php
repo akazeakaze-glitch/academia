@@ -9,7 +9,6 @@ if (!isset($_SESSION['aluno_id'])) {
 
 $aluno_id = $_SESSION['aluno_id'];
 
-// 1. Consulta em ordem cronológica (ASC) para alimentar o gráfico
 $stmt_chart = $pdo->prepare("SELECT data_avaliacao, peso, cintura FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao ASC");
 $stmt_chart->execute(['aluno_id' => $aluno_id]);
 $avaliacoes_chart = $stmt_chart->fetchAll(PDO::FETCH_ASSOC);
@@ -25,7 +24,6 @@ foreach ($avaliacoes_chart as $av) {
     $cinturas_data[] = !empty($av['cintura']) ? (float)$av['cintura'] : null;
 }
 
-// 2. Consulta em ordem decrescente (DESC) para listar os cartões de histórico
 $stmt = $pdo->prepare("SELECT * FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao DESC");
 $stmt->execute(['aluno_id' => $aluno_id]);
 $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
