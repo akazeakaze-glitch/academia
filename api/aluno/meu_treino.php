@@ -6,6 +6,26 @@ if (!isset($_SESSION['aluno_id'])) {
     header("Location: ../index.php");
     exit;
 }
+
+$aluno_id = $_SESSION['aluno_id'];
+
+// --- LÓGICA DO FEEDBACK (ITEM A) ---
+$mensagem_sucesso = '';
+$mensagem_erro = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comentario'])) {
+    $comentario = trim($_POST['comentario']);
+
+    if (!empty($comentario) && $aluno_id) {
+        $stmt = $pdo->prepare("INSERT INTO feedback_treino (aluno_id, comentario) VALUES (:aluno_id, :comentario)");
+        if ($stmt->execute(['aluno_id' => $aluno_id, 'comentario' => $comentario])) {
+            $mensagem_sucesso = "Seu feedback foi enviado ao professor com sucesso!";
+        } else {
+            $mensagem_erro = "Erro ao enviar o feedback. Tente novamente.";
+        }
+    }
+}
+
 $aluno_id = $_SESSION['aluno_id'];
 
 $stmt_aluno = $pdo->prepare("SELECT sexo, treino_atual FROM alunos WHERE id = :id");
