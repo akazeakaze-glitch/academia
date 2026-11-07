@@ -9,28 +9,26 @@ if (!isset($_SESSION['aluno_id'])) {
 
 $aluno_id = $_SESSION['aluno_id'];
 
-// Buscar dados do aluno (inclusive o treino atual A, B, C...)
-$stmt_aluno = $pdo->prepare("SELECT sexo, treino_atual FROM alunos WHERE id = :id");
-$stmt_aluno->execute(['id' => $aluno_id]);
-$aluno_dados = $stmt_aluno->fetch(PDO::FETCH_ASSOC);
-$treino_atual = $aluno_dados['treino_atual'] ?? 'A';
+$stmt_chart = $pdo->prepare("SELECT data_avaliacao, peso, cintura, abdomen FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao ASC");
+$stmt_chart->execute(['aluno_id' => $aluno_id]);
+$avaliacoes_chart = $stmt_chart->fetchAll(PDO::FETCH_ASSOC);
 
-// Lógica de envio de feedback
-$mensagem_sucesso = '';
-$mensagem_erro = '';
+$datas_label = [];
+$pesos_data = [];
+$cinturas_data = [];
+$abdomens_data = [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comentario'])) {
-    $comentario = trim($_POST['comentario']);
-
-    if (!empty($comentario) && $aluno_id) {
-        $stmt = $pdo->prepare("INSERT INTO feedback_treino (aluno_id, treino, comentario) VALUES (:aluno_id, :treino, :comentario)");
-        if ($stmt->execute(['aluno_id' => $aluno_id, 'treino' => $treino_atual, 'comentario' => $comentario])) {
-            $mensagem_sucesso = "Seu feedback foi enviado ao professor com sucesso!";
-        } else {
-            $mensagem_erro = "Erro ao enviar o feedback. Tente novamente.";
-        }
-    }
+foreach ($avaliacoes_chart as $av) {
+    $datas_label[] = date('d/m/Y', strtotime($av['data_avaliacao']));
+    $pesos_data[] = (float)$av['peso'];
+    $cinturas_data[] = !empty($av['cintura']) ? (float)$av['cintura'] : null;
+    $abdomens_data[] = !empty($av['abdomen']) ? (float)$av['abdomen'] : null;
 }
+
+$stmt = $pdo->prepare("SELECT * FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao DESC");
+$stmt->execute(['aluno_id' => $aluno_id]);
+$avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -54,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comentario'])) {
 <body class="py-3">
 
     <div class="container">
-        
         <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
             <h4 class="mb-0">Histórico & Evolução</h4>
             <a href="painel_aluno.php" class="btn text-white btn-sm" style="background-color: #252525; border: 1px solid #444; border-radius: 8px;">
@@ -115,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comentario'])) {
                             </div>
                         </div>
 
+                        <!-- MEDIDAS CORPORAIS / PERIMETRIA -->
                         <h6 class="mt-3 mb-2" style="color: #aaa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
                             Circunferências (cm)
                         </h6>
