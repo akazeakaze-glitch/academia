@@ -15,7 +15,6 @@ $stmt_fichas = $pdo->prepare("SELECT COUNT(*) AS total FROM fichas WHERE data_ve
 $stmt_fichas->execute(['hoje' => $hoje]);
 $fichas_vencidas = $stmt_fichas->fetch(PDO::FETCH_ASSOC)['total'];
 
-// Buscar contagem de feedbacks recebidos
 try {
     $stmt_feedbacks = $pdo->query("SELECT COUNT(*) AS total FROM feedback_treino");
     $total_feedbacks = $stmt_feedbacks->fetch(PDO::FETCH_ASSOC)['total'];
@@ -60,10 +59,8 @@ try {
                 <li class="nav-item"><a href="fichas.php" class="nav-link">Fichas de Treino</a></li>
                 <li class="nav-item"><a href="avaliacoes.php" class="nav-link">Avaliações Físicas</a></li>
                 
-                <!-- NOVO ITEM DE FEEDBACKS ADICIONADO NO MENU -->
                 <li class="nav-item">
                     <a href="ver_feedbacks.php" class="nav-link">
-                        <i class="bi bi-chat-left-text me-1"></i> Feedbacks
                     </a>
                 </li>
             </ul>
@@ -71,8 +68,7 @@ try {
             <hr style="border-color: #444;">
             <a href="index.php" class="nav-link text-danger text-center">Sair do Sistema</a>
         </div>
-        
-        <!-- CONTEÚDO PRINCIPAL -->
+    
         <div class="content p-5 w-100">
             <h2>Bem-vindo, <?php echo $_SESSION['usuario_nome']; ?>!</h2>
             <p style="color: #aaaaaa;">Perfil de acesso: <strong><?php echo ucfirst($_SESSION['tipo_usuario']); ?></strong></p>
@@ -91,7 +87,6 @@ try {
                     </div>
                 </div>
 
-                <!-- NOVO CARD DE FEEDBACKS RECEBIDOS -->
                 <div class="col-md-4">
                     <a href="ver_feedbacks.php" style="text-decoration: none;">
                         <div class="card card-dash p-4 mb-3 text-white">
