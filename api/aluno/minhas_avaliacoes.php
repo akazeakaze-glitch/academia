@@ -9,26 +9,28 @@ if (!isset($_SESSION['aluno_id'])) {
 
 $aluno_id = $_SESSION['aluno_id'];
 
-$stmt_chart = $pdo->prepare("SELECT data_avaliacao, peso, cintura, abdomen FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao ASC");
-$stmt_chart->execute(['aluno_id' => $aluno_id]);
-$avaliacoes_chart = $stmt_chart->fetchAll(PDO::FETCH_ASSOC);
+// Buscar dados do aluno (inclusive o treino atual A, B, C...)
+$stmt_aluno = $pdo->prepare("SELECT sexo, treino_atual FROM alunos WHERE id = :id");
+$stmt_aluno->execute(['id' => $aluno_id]);
+$aluno_dados = $stmt_aluno->fetch(PDO::FETCH_ASSOC);
+$treino_atual = $aluno_dados['treino_atual'] ?? 'A';
 
-$datas_label = [];
-$pesos_data = [];
-$cinturas_data = [];
-$abdomens_data = [];
+// Lógica de envio de feedback
+$mensagem_sucesso = '';
+$mensagem_erro = '';
 
-foreach ($avaliacoes_chart as $av) {
-    $datas_label[] = date('d/m/Y', strtotime($av['data_avaliacao']));
-    $pesos_data[] = (float)$av['peso'];
-    $cinturas_data[] = !empty($av['cintura']) ? (float)$av['cintura'] : null;
-    $abdomens_data[] = !empty($av['abdomen']) ? (float)$av['abdomen'] : null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comentario'])) {
+    $comentario = trim($_POST['comentario']);
+
+    if (!empty($comentario) && $aluno_id) {
+        $stmt = $pdo->prepare("INSERT INTO feedback_treino (aluno_id, treino, comentario) VALUES (:aluno_id, :treino, :comentario)");
+        if ($stmt->execute(['aluno_id' => $aluno_id, 'treino' => $treino_atual, 'comentario' => $comentario])) {
+            $mensagem_sucesso = "Seu feedback foi enviado ao professor com sucesso!";
+        } else {
+            $mensagem_erro = "Erro ao enviar o feedback. Tente novamente.";
+        }
+    }
 }
-
-$stmt = $pdo->prepare("SELECT * FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao DESC");
-$stmt->execute(['aluno_id' => $aluno_id]);
-$avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
