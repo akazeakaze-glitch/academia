@@ -9,7 +9,6 @@ if (!isset($_SESSION['aluno_id'])) {
 
 $aluno_id = $_SESSION['aluno_id'];
 
-// 1. Buscar dados do aluno
 $stmt_aluno = $pdo->prepare("SELECT sexo, treino_atual FROM alunos WHERE id = :id");
 $stmt_aluno->execute(['id' => $aluno_id]);
 $aluno_dados = $stmt_aluno->fetch(PDO::FETCH_ASSOC);
@@ -17,7 +16,6 @@ $aluno_dados = $stmt_aluno->fetch(PDO::FETCH_ASSOC);
 $sexo_aluno = $aluno_dados['sexo'] ?? 'M';
 $treino_atual = $_GET['treino'] ?? $_POST['treino'] ?? $aluno_dados['treino_atual'] ?? 'A';
 
-// 2. Processar envio do feedback de treino
 $mensagem_sucesso = '';
 $mensagem_erro = '';
 
@@ -35,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comentario'])) {
     }
 }
 
-// 3. Buscar ficha de exercícios do aluno
 $stmt = $pdo->prepare("SELECT * FROM fichas WHERE aluno_id = :aluno_id ORDER BY id DESC LIMIT 1");
 $stmt->execute(['aluno_id' => $aluno_id]);
 $ficha = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -85,7 +82,6 @@ if ($ficha) {
             <span class="badge badge-orange fs-6">Treino <?= htmlspecialchars($treino_atual) ?></span>
         </div>
 
-        <!-- MENSAGENS DE ALERTA -->
         <?php if ($mensagem_sucesso): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?= htmlspecialchars($mensagem_sucesso) ?>
@@ -98,14 +94,12 @@ if ($ficha) {
             </div>
         <?php endif; ?>
 
-        <!-- SELETOR DE DIVISÃO DE TREINO (A, B, C) -->
         <div class="d-flex gap-2 mb-4">
             <a href="meu_treino.php?treino=A" class="btn flex-fill <?= $treino_atual === 'A' ? 'btn-warning' : 'btn-outline-secondary text-white' ?>" style="font-weight: bold;">Treino A</a>
             <a href="meu_treino.php?treino=B" class="btn flex-fill <?= $treino_atual === 'B' ? 'btn-warning' : 'btn-outline-secondary text-white' ?>" style="font-weight: bold;">Treino B</a>
             <a href="meu_treino.php?treino=C" class="btn flex-fill <?= $treino_atual === 'C' ? 'btn-warning' : 'btn-outline-secondary text-white' ?>" style="font-weight: bold;">Treino C</a>
         </div>
 
-        <!-- LISTAGEM DE EXERCÍCIOS -->
         <?php if (empty($exercicios)): ?>
             <div class="alert alert-dark text-center border-secondary my-4" role="alert" style="background-color: #1a1a1a; color: #aaa;">
                 Nenhum exercício encontrado para o Treino <?= htmlspecialchars($treino_atual) ?>.
@@ -129,14 +123,12 @@ if ($ficha) {
             </div>
         <?php endif; ?>
 
-        <!-- FORMULÁRIO DE FEEDBACK -->
         <div class="card mt-4 mb-4" style="background-color: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 12px;">
             <div class="card-header" style="background-color: #252525; border-bottom: 1px solid #333; color: #fff; border-radius: 12px 12px 0 0;">
                 <h5 class="card-title mb-0" style="font-size: 1.1rem;">Enviar Feedback ao Professor</h5>
             </div>
             <div class="card-body">
                 <form method="POST" action="">
-                    <!-- CAMPO OCULTO QUE GARANTE A LETRA DO TREINO (A, B, C) -->
                     <input type="hidden" name="treino" value="<?= htmlspecialchars($treino_atual) ?>">
                     
                     <div class="mb-3">
@@ -152,7 +144,6 @@ if ($ficha) {
 
     </div>
 
-    <!-- MENU DE NAVEGAÇÃO INFERIOR FIXO -->
     <div style="position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: #1a1a1a; border-top: 1px solid #333; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; z-index: 1000;">
         <a href="painel_aluno.php" style="color: #ffffff; text-decoration: none; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; font-weight: 500;">
             <i class="bi bi-house-door" style="font-size: 1.4rem; margin-bottom: 3px; color: #f97316;"></i>
