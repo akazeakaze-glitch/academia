@@ -320,7 +320,22 @@ $exercicios_hoje = array_filter($exercicios, function($ex) use ($treino_atual) {
         <?php endif; ?>
 
     </div>
+<div class="card mt-4 mb-4 border-primary">
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0"><i class="bi bi-chat-left-text"></i> Enviar Feedback ao Professor</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <label for="comentario" class="form-label font-weight-bold">O que achou do treino de hoje?</label>
+                    <textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Ex: Achei o treino muito pesado nas pernas, gostaria de adicionar mais exercícios..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+            </form>
+        </div>
+    </div>
 
+</div
     <div class="bottom-nav">
         <a href="painel_aluno.php" class="nav-item">
             <i class="bi bi-house-door"></i>
