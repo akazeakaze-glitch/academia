@@ -9,6 +9,7 @@ if (!isset($_SESSION['aluno_id'])) {
 
 $aluno_id = $_SESSION['aluno_id'];
 
+// 1. Consulta em ordem cronológica (ASC) incluindo abdômen para o gráfico
 $stmt_chart = $pdo->prepare("SELECT data_avaliacao, peso, cintura, abdomen FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao ASC");
 $stmt_chart->execute(['aluno_id' => $aluno_id]);
 $avaliacoes_chart = $stmt_chart->fetchAll(PDO::FETCH_ASSOC);
@@ -25,6 +26,7 @@ foreach ($avaliacoes_chart as $av) {
     $abdomens_data[] = !empty($av['abdomen']) ? (float)$av['abdomen'] : null;
 }
 
+// 2. Consulta em ordem decrescente (DESC) para listar os cartões de histórico
 $stmt = $pdo->prepare("SELECT * FROM avaliacoes WHERE aluno_id = :aluno_id ORDER BY data_avaliacao DESC");
 $stmt->execute(['aluno_id' => $aluno_id]);
 $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -47,11 +49,19 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .metric-box { background-color: #242424; border: 1px solid #333; border-radius: 8px; padding: 10px; text-align: center; }
         .metric-label { font-size: 0.75rem; color: #aaa; text-transform: uppercase; }
         .metric-value { font-size: 1.1rem; font-weight: bold; color: #fff; }
+
+        /* NAV BAR INFERIOR PADRÃO (FOTO 1/3) */
+        .navbar-inferior { position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: #1a1a1a; border-top: 1px solid #333; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; z-index: 1000; }
+        .navbar-item { color: #ffffff; text-decoration: none; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; font-weight: 600; transition: 0.2s; }
+        .navbar-item i { font-size: 1.45rem; margin-bottom: 3px; color: #f97316; }
+        .navbar-item:hover { color: #f97316; }
     </style>
 </head>
 <body class="py-3">
 
     <div class="container">
+        
+        <!-- CABEÇALHO -->
         <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
             <h4 class="mb-0">Histórico & Evolução</h4>
             <a href="painel_aluno.php" class="btn text-white btn-sm" style="background-color: #252525; border: 1px solid #444; border-radius: 8px;">
@@ -66,6 +76,7 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php else: ?>
             
+            <!-- GRÁFICO DE EVOLUÇÃO FÍSICA -->
             <div class="card card-dark mb-4">
                 <div class="card-header" style="background-color: #252525; border-bottom: 1px solid #333; color: #fff; border-radius: 12px 12px 0 0;">
                     <strong>Evolução Corporal</strong>
@@ -75,6 +86,7 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
 
+            <!-- HISTÓRICO DE AVALIAÇÕES EM CARDS -->
             <h5 class="mb-3" style="color: #aaa; font-size: 1rem; text-transform: uppercase;">Histórico Detalhado</h5>
 
             <?php foreach ($avaliacoes as $av): ?>
@@ -112,7 +124,6 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
 
-                        <!-- MEDIDAS CORPORAIS / PERIMETRIA -->
                         <h6 class="mt-3 mb-2" style="color: #aaa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
                             Circunferências (cm)
                         </h6>
@@ -176,17 +187,18 @@ $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     </div>
 
-    <div style="position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: #1a1a1a; border-top: 1px solid #333; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; z-index: 1000;">
-        <a href="painel_aluno.php" style="color: #ffffff; text-decoration: none; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; font-weight: 500;">
-            <i class="bi bi-house-door" style="font-size: 1.4rem; margin-bottom: 3px; color: #f97316;"></i>
+    <!-- MENU INFERIOR AJUSTADO (FOTO 1/3): Início, Treino e Perfil -->
+    <div class="navbar-inferior">
+        <a href="painel_aluno.php" class="navbar-item">
+            <i class="bi bi-house-door"></i>
             <span>Início</span>
         </a>
-        <a href="meu_treino.php" style="color: #ffffff; text-decoration: none; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; font-weight: 500;">
-            <i class="bi bi-journal-check" style="font-size: 1.4rem; margin-bottom: 3px; color: #f97316;"></i>
+        <a href="meu_treino.php" class="navbar-item">
+            <i class="bi bi-journal-check"></i>
             <span>Treino</span>
         </a>
-        <a href="perfil.php" style="color: #ffffff; text-decoration: none; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; font-weight: 500;">
-            <i class="bi bi-person" style="font-size: 1.4rem; margin-bottom: 3px; color: #f97316;"></i>
+        <a href="perfil.php" class="navbar-item">
+            <i class="bi bi-person"></i>
             <span>Perfil</span>
         </a>
     </div>
