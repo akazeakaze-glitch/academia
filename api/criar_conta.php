@@ -4,6 +4,8 @@ require 'conexao.php';
 
 $erro = '';
 $sucesso = '';
+$data_maxima = date('Y-m-d'); 
+$data_minima = date('Y-m-d', strtotime('-100 years')); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = trim($_POST['nome']);
@@ -12,31 +14,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_nascimento = $_POST['data_nascimento'];
     $sexo = $_POST['sexo'];
     $senha = trim($_POST['senha']);
-    $data_maxima = date('Y-m-d'); 
-    $data_minima = date('Y-m-d', strtotime('-100 years')); 
+    $confirmar_senha = trim($_POST['confirmar_senha']);
 
-    $stmt = $pdo->prepare("SELECT id FROM alunos WHERE email = :email");
-    $stmt->execute(['email' => $email]);
-    
-    if ($stmt->fetch()) {
-        $erro = "Esse e-mail já está cadastrado! Tente fazer login.";
+    if ($senha !== $confirmar_senha) {
+        $erro = "As senhas não conferem! Digite a mesma senha nos dois campos.";
     } else {
-        $sql = "INSERT INTO alunos (nome, email, telefone, data_nascimento, sexo, senha, data_cadastro) 
-                VALUES (:nome, :email, :telefone, :data_nascimento, :sexo, :senha, CURDATE())";
-        $stmt = $pdo->prepare($sql);
+        $stmt = $pdo->prepare("SELECT id FROM alunos WHERE email = :email");
+        $stmt->execute(['email' => $email]);
         
-        if ($stmt->execute([
-            'nome' => $nome, 'email' => $email, 'telefone' => $telefone, 
-            'data_nascimento' => $data_nascimento, 'sexo' => $sexo, 'senha' => $senha
-        ])) {
-            $_SESSION['aluno_id'] = $pdo->lastInsertId();
-            $_SESSION['aluno_nome'] = $nome;
-            $_SESSION['tipo_usuario'] = 'aluno';
-            
-            header("Location: aluno/painel_aluno.php");
-            exit;
+        if ($stmt->fetch()) {
+            $erro = "Esse e-mail já está cadastrado! Tente fazer login.";
         } else {
-            $erro = "Erro ao criar conta. Tente novamente.";
+            $sql = "INSERT INTO alunos (nome, email, telefone, data_nascimento, sexo, senha, data_cadastro) 
+                    VALUES (:nome, :email, :telefone, :data_nascimento, :sexo, :senha, CURDATE())";
+            $stmt = $pdo->prepare($sql);
+            
+            if ($stmt->execute([
+                'nome' => $nome, 'email' => $email, 'telefone' => $telefone, 
+                'data_nascimento' => $data_nascimento, 'sexo' => $sexo, 'senha' => $senha
+            ])) {
+                $_SESSION['aluno_id'] = $pdo->lastInsertId();
+                $_SESSION['aluno_nome'] = $nome;
+                $_SESSION['tipo_usuario'] = 'aluno';
+                
+                header("Location: aluno/painel_aluno.php");
+                exit;
+            } else {
+                $erro = "Erro ao criar conta. Tente novamente.";
+            }
         }
     }
 }
@@ -105,18 +110,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="mb-3">
                     <label class="text-light">Qual o seu Objetivo?</label>
-                      <select name="objetivo" class="form-select" required>
-                      <option value="">Selecione...</option>
-                      <option value="Hipertrofia">Hipertrofia (Ganhar Massa)</option>
-                      <option value="Emagrecimento">Emagrecimento (Perder Peso)</option>
-                      <option value="Saude">Saúde e Qualidade de Vida</option>
-                      <option value="Condicionamento">Condicionamento Físico</option>
-                      </select>
+                    <select name="objetivo" class="form-select" required>
+                        <option value="">Selecione...</option>
+                        <option value="Hipertrofia">Hipertrofia (Ganhar Massa)</option>
+                        <option value="Emagrecimento">Emagrecimento (Perder Peso)</option>
+                        <option value="Saude">Saúde e Qualidade de Vida</option>
+                        <option value="Condicionamento">Condicionamento Físico</option>
+                    </select>
                 </div>
-             </div>
-            <div class="mb-4">
-                <label class="text-muted mb-1" style="font-size: 0.9em;">Crie uma Senha</label>
-                <input type="password" name="senha" class="form-control" required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="text-muted mb-1" style="font-size: 0.9em;">Crie uma Senha</label>
+                    <input type="password" name="senha" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label class="text-muted mb-1" style="font-size: 0.9em;">Confirme a Senha</label>
+                    <input type="password" name="confirmar_senha" class="form-control" required>
+                </div>
             </div>
 
             <button type="submit" class="btn-login mb-3">Cadastrar e Entrar</button>
