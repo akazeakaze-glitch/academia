@@ -62,34 +62,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $treinos_padrao = [
     'M' => [
         'A' => [
-            ['grupo_muscular' => 'PEITO', 'nome' => 'Supino Inclinado com Halteres', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'PEITO', 'nome' => 'Supino Reto Máquina', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'PEITO', 'nome' => 'Crucifixo na Máquina', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'OMBROS', 'nome' => 'Desenvolvimento na Máquina', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'OMBROS', 'nome' => 'Elevação Lateral Polia', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'TRÍCEPS', 'nome' => 'Tríceps com Corda na Polia', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '']
+            ['grupo_muscular' => 'PEITO', 'nome' => 'Supino Inclinado com Halteres', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/8pHiM5ES3Zg?si=RqbOrJPCWO3y_iDM'],
+            ['grupo_muscular' => 'PEITO', 'nome' => 'Supino Reto Máquina', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtu.be/M4Iagnqx4cg?si=UrAZ5tg5F1GsGMzn'],
+            ['grupo_muscular' => 'PEITO', 'nome' => 'Crucifixo na Máquina', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/9BEQWr0u-ac?si=azczN6c6KI4LLI0N'],
+            ['grupo_muscular' => 'OMBROS', 'nome' => 'Desenvolvimento na Máquina', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/kTmKo6dSYCM?si=drjxsR9Xvzn9Jg45'],
+            ['grupo_muscular' => 'OMBROS', 'nome' => 'Elevação Lateral Polia', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/89J3D_XDa3A?si=RDBVJ0Y6B2KUeUWK'],
+            ['grupo_muscular' => 'TRÍCEPS', 'nome' => 'Tríceps com Corda na Polia', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/oNfGj0QtT9Q?si=1QkO1vmd8R8opRn2']
         ],
         'B' => [
-            ['grupo_muscular' => 'COSTAS', 'nome' => 'Puxada Alta Frontal', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'COSTAS', 'nome' => 'Remada Baixa', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'COSTAS', 'nome' => 'Pulldown com Corda', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'BÍCEPS', 'nome' => 'Rosca Direta com Barra', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'BÍCEPS', 'nome' => 'Rosca Alternada com Halteres', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '']
+            ['grupo_muscular' => 'COSTAS', 'nome' => 'Puxada Alta Frontal', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/3qj46qsOgfI?si=DaJXYm1EqS9lq2s8'],
+            ['grupo_muscular' => 'COSTAS', 'nome' => 'Remada Baixa', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/Ai8CjE7szJU?si=RgVrlkqmByk3vbjC'],
+            ['grupo_muscular' => 'COSTAS', 'nome' => 'Pulldown com Corda', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/WesVSdTPAAU?si=ZrnjmR_wdHA0gECd'],
+            ['grupo_muscular' => 'BÍCEPS', 'nome' => 'Rosca Direta com Barra', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/iA4RH6zDin0?si=_c3HqxMRDFpgXxVv'],
+            ['grupo_muscular' => 'BÍCEPS', 'nome' => 'Rosca Alternada com Halteres', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/M4hvbi_f-Q8?si=B2K6VB3Cm0WiyMmq']
         ],
         'C' => [
-            ['grupo_muscular' => 'QUADRÍCEPS', 'nome' => 'Agachamento Smith', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'QUADRÍCEPS', 'nome' => 'Leg Press 45°', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'QUADRÍCEPS', 'nome' => 'Cadeira Extensora', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'POSTERIOR', 'nome' => 'Mesa Flexora', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'POSTERIOR', 'nome' => 'Cadeira Flexora', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'PANTURRILHA', 'nome' => 'Panturrilha na Máquina', 'series' => '3', 'repeticoes' => '12-15', 'carga' => '']
+            ['grupo_muscular' => 'QUADRÍCEPS', 'nome' => 'Agachamento Smith', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/nQzIKqrMErE?si=Vy0T-X2MlOt8qXxQ'],
+            ['grupo_muscular' => 'QUADRÍCEPS', 'nome' => 'Leg Press 45°', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/DQ4-HXFlKXI?si=Ljga53cAdvMYQrbp'],
+            ['grupo_muscular' => 'QUADRÍCEPS', 'nome' => 'Cadeira Extensora', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/y7GhuVphn4s?si=T28PHthztVcR8MlM'],
+            ['grupo_muscular' => 'POSTERIOR', 'nome' => 'Mesa Flexora', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/ne-J--fK0tE?si=U9Y46Fhvz2DnxTmN'],
+            ['grupo_muscular' => 'POSTERIOR', 'nome' => 'Cadeira Flexora', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/c3cng1WqREQ?si=Dn6YwEJ7Y37EQe7X'],
+            ['grupo_muscular' => 'PANTURRILHA', 'nome' => 'Panturrilha na Máquina', 'series' => '3', 'repeticoes' => '12-15', 'carga' => '', 'video' => 'https://youtube.com/shorts/EILF4iyBxSQ?si=osVXM1hK3RQyb5mA']
         ],
         'D' => [
-            ['grupo_muscular' => 'PEITO', 'nome' => 'Supino Reto com Barra', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'COSTAS', 'nome' => 'Remada Curvada', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'BÍCEPS', 'nome' => 'Rosca Martelo', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'TRÍCEPS', 'nome' => 'Tríceps Testa', 'series' => '3', 'repeticoes' => '10-12', 'carga' => ''],
-            ['grupo_muscular' => 'OMBROS', 'nome' => 'Elevação Frontal', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '']
+            ['grupo_muscular' => 'PEITO', 'nome' => 'Supino Reto com Barra', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtu.be/dJfxLn2SAE0?si=5em7PXB_jPmnu9ME'],
+            ['grupo_muscular' => 'COSTAS', 'nome' => 'Remada Curvada', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/SbuXAFpDUkI?si=nGtXRwLtRjGAZxn2'],
+            ['grupo_muscular' => 'BÍCEPS', 'nome' => 'Rosca Martelo', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/8PN6YfFC6Q4?si=ylkbjUXsn0nwmgae'],
+            ['grupo_muscular' => 'TRÍCEPS', 'nome' => 'Tríceps Testa', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/cIqScmVpqnc?si=j31dg9_OvEfo0W9p'],
+            ['grupo_muscular' => 'OMBROS', 'nome' => 'Elevação Frontal', 'series' => '3', 'repeticoes' => '10-12', 'carga' => '', 'video' => 'https://youtube.com/shorts/3BVXcDJlU0g?si=ecgdKREIy8ax-Z_u']
         ]
     ],
     'F' => [
@@ -181,6 +181,8 @@ $data_vencimento = date('d/m/Y', strtotime('+30 days'));
         .tag-grupo { color: #f97316; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .nome-ex { color: #ffffff; font-size: 1rem; font-weight: 700; margin-top: 2px; margin-bottom: 4px; }
         .detalhes-ex { color: #888888; font-size: 0.85rem; }
+        .link-execucao { color: #aaaaaa; text-decoration: none; transition: 0.2s; }
+        .link-execucao:hover { color: #f97316; text-decoration: underline; }
 
         .circle-check-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #555; background-color: transparent; color: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; padding: 0; }
         .circle-check-btn.checked { background-color: #22c55e; border-color: #22c55e; color: #ffffff; box-shadow: 0 0 10px rgba(34, 197, 94, 0.4); }
@@ -228,6 +230,12 @@ $data_vencimento = date('d/m/Y', strtotime('+30 days'));
                             <i class="bi bi-arrow-repeat me-1"></i><?= htmlspecialchars($ex['series']) ?> x <?= htmlspecialchars($ex['repeticoes']) ?>
                             <?php if (!empty($ex['carga'])): ?>
                                 | <?= htmlspecialchars($ex['carga']) ?> kg
+                            <?php endif; ?>
+                            <?php if (!empty($ex['video'])): ?>
+                                <span class="mx-1">•</span>
+                                <a href="<?= htmlspecialchars($ex['video']) ?>" target="_blank" rel="noopener noreferrer" class="link-execucao">
+                                    <i class="bi bi-youtube text-danger me-1"></i>Ver execução
+                                </a>
                             <?php endif; ?>
                         </div>
                     </div>
