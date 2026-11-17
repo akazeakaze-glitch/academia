@@ -234,7 +234,7 @@ $data_vencimento = date('d/m/Y', strtotime('+30 days'));
                             <?php if (!empty($ex['video'])): ?>
                                 <span class="mx-1">•</span>
                                 <a href="<?= htmlspecialchars($ex['video']) ?>" target="_blank" rel="noopener noreferrer" class="link-execucao">
-                                    <i class="bi bi-youtube text-danger me-1"></i>Ver execução
+                                    Ver execução
                                 </a>
                             <?php endif; ?>
                         </div>
